@@ -15,14 +15,16 @@ class ZanikGame:
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
         
-        pygame.display.set_caption("ZÄNIK")
+        #   Set title for window
+        pygame.display.set_caption("Zanik and the lost rings")
+        
+        #   Get background image and adjust it to display
         self.bg_img = pygame.image.load("images/bg.png")
         self.bg_width = self.bg_img.get_width()
         self.bg = pygame.transform.scale(self.bg_img, (self.bg_width, self.settings.height))
-        #self.bg_rect = self.bg_img.get_rect()
-        
-         # Count display "tiles" for scrolling the back
-        #self.tiles = math.ceil((self.settings.width/self.bg_width)+2 )
+             
+        # Count display "tiles" for scrolling the back
+        self.tiles = math.ceil((self.settings.width/self.bg_width)+2)
         # Initialize created character
         self.zanik = Zanik(self)
         
@@ -60,13 +62,7 @@ class ZanikGame:
                         # TODO Character stands up when released
                         continue
                     
-            #   Redraw the screen each loop
-            #   self.screen.fill(self.settings.bg_color)
-            
-            #   Make endless background
-            #   Count the panels in screen
-            self.tiles = math.ceil((self.settings.width/self.bg_width)+2)
-            
+            #   Make endless background            
             #   Scroll through the tiles in the background and create infinite loop
             for i in range (self.tiles):
                 self.screen.blit(self.bg, (i * self.bg_width + scroll - self.bg_width, 0 ))
@@ -78,7 +74,7 @@ class ZanikGame:
             #   Create player
             self.zanik.blitme()
 
-            #   Update screen to display new bg
+            #   Update screen to display new background
             pygame.display.update()
         
     

@@ -1,4 +1,3 @@
-#import pygame
 import math
 
 class Settings:
