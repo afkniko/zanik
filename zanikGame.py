@@ -6,7 +6,7 @@ from settings import Settings
 
 
 class ZanikGame:
-    #   Class to manage game assets and behaviour.
+    # Class to manage game assets and behaviour.
     
     def __init__(self):
         # Initialize game and create resources.
@@ -15,11 +15,11 @@ class ZanikGame:
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
         
-        #   Set title for window
+        # Set title for window
         pygame.display.set_caption("Zanik and the lost rings")
         
-        #   Get background image and adjust it to display
-        self.bg_img = pygame.image.load("images/bg.png")
+        # Get background image and adjust it to display
+        self.bg_img = pygame.image.load("assets/bg.png")
         self.bg_width = self.bg_img.get_width()
         self.bg = pygame.transform.scale(self.bg_img, (self.bg_width, self.settings.height))
              
@@ -36,27 +36,48 @@ class ZanikGame:
         # Start main loop for game
         while True:
             
-            #   Keep track of user input
+            # Keep track of user input
             self.__check_events()
+            self.zanik.move()
             self._update_screen()
    
-    #   Function to track user input
+    # Function to track user input
     def __check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
                 
-            #   APPLY direction when key is pressed
+            # APPLY direction when key is pressed
             if event.type == pygame.KEYDOWN:
-                #   Moves character up
+                # Moves character up
                 if event.key == pygame.K_UP:
-                    position = -1
-                    self.zanik.control(position)
-                    
-                #   Moves character down                        
+                    self.zanik.moving_up = True
+                # Moves character down                        
                 if  event.key == pygame.K_DOWN:
-                    position = 1
-                    self.zanik.control(position)
+                    self.zanik.moving_down = True
+                    
+                # Move character right
+                if event.key == pygame.K_RIGHT:
+                    self.zanik.moving_right = True
+                    
+                # Move character left
+                if event.key == pygame.K_LEFT:
+                    self.zanik.moving_left = True
+  
+            elif event.type == pygame.KEYUP:
+                
+                if event.key == pygame.K_UP:
+                    self.zanik.moving_up = False
+                       
+                if  event.key == pygame.K_DOWN:
+                    self.zanik.moving_down = False
+                    
+                if event.key == pygame.K_RIGHT:
+                    self.zanik.moving_right = False
+
+                if event.key == pygame.K_LEFT:
+                    self.zanik.moving_left = False 
+
     
     def _update_screen(self):
          
