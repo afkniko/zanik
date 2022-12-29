@@ -7,8 +7,11 @@ class Settings:
         # Display settings
         self.height = 800
         self.width = 1200
-        # Set background
-        self.bg_color = (0, 0, 0)
-        self.scroll = 0        
         
+        # Background scroll speed
+        self.scroll = 0       
+        
+        # Char speed 
+        self.char_speed = 0.75
+        self.idle_speed = 0.35
   

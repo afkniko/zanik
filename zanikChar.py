@@ -7,6 +7,7 @@ class Zanik():
         # Create ship and its starting position
         self.screen = zg_game.screen
         self.screen_rect = zg_game.screen.get_rect()
+        self.settings = zg_game.settings
         
         # Load image of character
         self.image = pygame.image.load("assets/zanikSprite.bmp")
@@ -17,7 +18,9 @@ class Zanik():
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-       
+        self.idle_left = True
+
+        
         # Get image size
         self.size = self.image.get_size()
         # Create a 5x smaller image than self.image
@@ -25,6 +28,10 @@ class Zanik():
         self.rect.y = 550 # Move in y axis
         self.rect.x = 500 # Move in x axis
         self.frame = 0 # Count frames
+        
+        # Char positions
+        self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
         
         
         
@@ -35,13 +42,19 @@ class Zanik():
     def move(self):
         # Move the player up
         if self.moving_up and self.rect.y > 500:
-            self.rect.y -= 1
+            self.y -= self.settings.char_speed
         # Move the player down
         if self.moving_down and self.rect.y < 600:
-            self.rect.y += 1
+            self.y += self.settings.char_speed
         # Move the player right   
         if self.moving_right and self.rect.x < 1000:
-            self.rect.x += 1
+            self.x += self.settings.char_speed
         # Move the player left   
         if self.moving_left and self.rect.x > 0:
-            self.rect.x -= 1
+            self.x -= self.settings.char_speed
+        
+        if self.idle_left:
+            self.x -= self.settings.idle_speed
+            
+        self.rect.x = self.x
+        self.rect.y = self.y

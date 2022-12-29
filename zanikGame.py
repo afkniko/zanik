@@ -49,40 +49,46 @@ class ZanikGame:
                 
             # APPLY direction when key is pressed
             if event.type == pygame.KEYDOWN:
-                # Moves character up
-                if event.key == pygame.K_UP:
-                    self.zanik.moving_up = True
-                # Moves character down                        
-                if  event.key == pygame.K_DOWN:
-                    self.zanik.moving_down = True
-                    
-                # Move character right
-                if event.key == pygame.K_RIGHT:
-                    self.zanik.moving_right = True
-                    
-                # Move character left
-                if event.key == pygame.K_LEFT:
-                    self.zanik.moving_left = True
-  
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                
-                if event.key == pygame.K_UP:
-                    self.zanik.moving_up = False
-                       
-                if  event.key == pygame.K_DOWN:
-                    self.zanik.moving_down = False
-                    
-                if event.key == pygame.K_RIGHT:
-                    self.zanik.moving_right = False
-
-                if event.key == pygame.K_LEFT:
-                    self.zanik.moving_left = False 
-
+                self._check_keyup_events(event)
     
+    def _check_keydown_events(self, event):
+        # Respond to keypresses
+        # Moves character up
+        if event.key == pygame.K_UP:
+            self.zanik.moving_up = True
+        # Moves character down                        
+        if  event.key == pygame.K_DOWN:
+            self.zanik.moving_down = True            
+        # Move character right
+        if event.key == pygame.K_RIGHT:
+            self.zanik.moving_right = True    
+        # Move character left
+        if event.key == pygame.K_LEFT:
+            self.zanik.moving_left = True
+        if event.key == pygame.K_q:
+            sys.exit()
+    
+    def _check_keyup_events(self, event):
+        # Respond to key release
+        
+        if event.key == pygame.K_UP:
+            self.zanik.moving_up = False
+                
+        if  event.key == pygame.K_DOWN:
+            self.zanik.moving_down = False
+            
+        if event.key == pygame.K_RIGHT:
+            self.zanik.moving_right = False
+
+        if event.key == pygame.K_LEFT:
+            self.zanik.moving_left = False
+
     def _update_screen(self):
          
-        #   Make endless background            
-        #   Scroll through the tiles in the background and create infinite loop
+        # Make endless background            
+        # Scroll through the tiles in the background and create infinite loop
         for i in range (self.tiles):
             self.screen.blit(self.bg, (i * self.bg_width + self.settings.scroll - self.bg_width, 0 ))
             
