@@ -1,7 +1,5 @@
-import math
-
 class Settings:
-    # Settings for Zanik.
+    # Settings for game.
     
     def __init__(self):
         # Game settings

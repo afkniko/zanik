@@ -22,14 +22,15 @@ class Zanik():
         self.frame = 0 # count frames
         
         
+        
     def blitme(self):
         # Draw char at location x = 50 , y = 550
         self.screen.blit(self.smaller_img,  [self.char_x, self.char_y])
         
-    def control(self,direction):
+    def control(self,position):
         #   Move the player down
-        if self.char_y >= 550 and direction == -1:
+        if self.char_y >= 550 and position == -1:
             self.char_y -= 50
         #   Move the player up
-        elif self.char_y <= 550 and direction == 1:
+        elif self.char_y <= 550 and position == 1:
             self.char_y += 50

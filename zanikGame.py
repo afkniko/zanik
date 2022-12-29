@@ -28,55 +28,53 @@ class ZanikGame:
         # Initialize created character
         self.zanik = Zanik(self)
         
-    def run_game(self):
-        scroll = self.settings.scroll
-        direction = 0
-        # Start main loop for game
+    
         
+    def run_game(self):
+        
+        
+        # Start main loop for game
         while True:
             
-            # Keep track of user input
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                    
-                #   APPLY direction when key is pressed
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        direction = -1
-                        self.zanik.control(direction)
-                        #   TODO Jump on press or move 1 line up?
-                        
-                    if  event.key == pygame.K_DOWN:
-                        direction = 1
-                        self.zanik.control(direction)
-                        # TODO Crouch on press or move 1 line down?
-                        
-                        
-                #   REMOVE direction when key is released
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_RIGHT:
-                        # TODO ??
-                        continue
-                    if  event.key == pygame.K_DOWN:
-                        # TODO Character stands up when released
-                        continue
-                    
-            #   Make endless background            
-            #   Scroll through the tiles in the background and create infinite loop
-            for i in range (self.tiles):
-                self.screen.blit(self.bg, (i * self.bg_width + scroll - self.bg_width, 0 ))
+            #   Keep track of user input
+            self.__check_events()
+            self._update_screen()
+   
+    #   Function to track user input
+    def __check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
                 
-            if abs(scroll) > self.bg_width:
-                scroll = 0
-            scroll -= 0.35
+            #   APPLY direction when key is pressed
+            if event.type == pygame.KEYDOWN:
+                #   Moves character up
+                if event.key == pygame.K_UP:
+                    position = -1
+                    self.zanik.control(position)
+                    
+                #   Moves character down                        
+                if  event.key == pygame.K_DOWN:
+                    position = 1
+                    self.zanik.control(position)
+    
+    def _update_screen(self):
+         
+        #   Make endless background            
+        #   Scroll through the tiles in the background and create infinite loop
+        for i in range (self.tiles):
+            self.screen.blit(self.bg, (i * self.bg_width + self.settings.scroll - self.bg_width, 0 ))
             
-            #   Create player
-            self.zanik.blitme()
-
-            #   Update screen to display new background
-            pygame.display.update()
+        if abs(self.settings.scroll) > self.bg_width:
+            self.settings.scroll = 0
+        self.settings.scroll -= 0.35
         
+        #   Create player
+        self.zanik.blitme()
+
+        #   Update screen to display new background
+        pygame.display.update()
+                        
     
 if __name__ == '__main__':
     zg = ZanikGame()
