@@ -14,4 +14,6 @@ class Settings:
         # Char speed 
         self.char_speed = 0.75
         self.idle_speed = 0.35
-  
+        
+        # Score
+        self.score = 0

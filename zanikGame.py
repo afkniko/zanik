@@ -3,17 +3,20 @@ import pygame
 import math
 from zanikChar import Zanik
 from settings import Settings
+from collectibles import Collectibles
 
 
 class ZanikGame:
     # Class to manage game assets and behaviour.
-    
     def __init__(self):
         # Initialize game and create resources.
-        
+         
         pygame.init()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
+        
+        # Font for texts
+        self.myfont = pygame.font.SysFont("monospace", 32)
         
         # Set title for window
         pygame.display.set_caption("Zanik and the lost rings")
@@ -25,12 +28,14 @@ class ZanikGame:
              
         # Count display "tiles" for scrolling the back
         self.tiles = math.ceil((self.settings.width/self.bg_width)+2)
-        # Initialize created character
+        # Initialize assets
         self.zanik = Zanik(self)
+        self.collectibles = Collectibles(self)
         
     
         
     def run_game(self):
+        
         
         
         # Start main loop for game
@@ -39,8 +44,9 @@ class ZanikGame:
             # Keep track of user input
             self.__check_events()
             self.zanik.move()
+            self.collectibles.moveRing()
             self._update_screen()
-   
+
     # Function to track user input
     def __check_events(self):
         for event in pygame.event.get():
@@ -86,22 +92,37 @@ class ZanikGame:
             self.zanik.moving_left = False
 
     def _update_screen(self):
-         
+        
         # Make endless background            
         # Scroll through the tiles in the background and create infinite loop
         for i in range (self.tiles):
             self.screen.blit(self.bg, (i * self.bg_width + self.settings.scroll - self.bg_width, 0 ))
             
         if abs(self.settings.scroll) > self.bg_width:
-            self.settings.scroll = 0
+           self.settings.scroll = 0
         self.settings.scroll -= 0.35
         
-        #   Create player
+        # Create player
         self.zanik.blitme()
+        
+        # Display score
+        self.scoreText()
+        
+        # Create collectibles
+        #self.collectibles.createRing()
 
-        #   Update screen to display new background
+        # Update screen to display new background
         pygame.display.update()
-                        
+    
+    def _check_ring_count(self):
+        ringCount =[]
+        maxRings = 10
+        for i in range (maxRings):
+            ringCount.append(self.collectibles.createRing())
+                            
+    def scoreText(self):
+       text = self.myfont.render("Score: " +str(self.settings.score),1, (0, 0, 0))
+       self.screen.blit(text,(5,10))
     
 if __name__ == '__main__':
     zg = ZanikGame()
