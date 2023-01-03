@@ -22,7 +22,7 @@ class Zanik():
 
         
         # Get image size
-        self.size = self.image.get_size()
+        #self.size = self.image.get_size()
         # Create a 10x smaller image than self.image
         #self.smaller_img = pygame.transform.scale(self.image, (int(self.size[0]/10), int(self.size[1]/10)))
         self.rect.y = 550 # Move in y axis
@@ -44,7 +44,7 @@ class Zanik():
         if self.moving_up and self.rect.y > 500:
             self.y -= self.settings.char_speed
         # Move the player down
-        if self.moving_down and self.rect.y < 600:
+        if self.moving_down and self.rect.y < 650:
             self.y += self.settings.char_speed
         # Move the player right   
         if self.moving_right and self.rect.x < 1000:

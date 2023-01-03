@@ -1,9 +1,11 @@
 import sys
 import pygame
 import math
+import random
 from zanikChar import Zanik
 from settings import Settings
-from collectibles import Collectibles
+from collectibles import Rings
+import time
 
 
 class ZanikGame:
@@ -30,23 +32,37 @@ class ZanikGame:
         self.tiles = math.ceil((self.settings.width/self.bg_width)+2)
         # Initialize assets
         self.zanik = Zanik(self)
-        self.collectibles = Collectibles(self)
+        self.rings = Rings(self.settings.img_path, self.settings.width, self.settings.height)
+        self.ringCount = self.rings.createRings()
         
-    
+        # Set count for spawns
+        
+
+
         
     def run_game(self):
-        
-        
-        
         # Start main loop for game
+
         while True:
             
             # Keep track of user input
             self.__check_events()
+            
+            # Check rings list if its empty and populate it
+            self._check_rings()
+            # Make character response to keys
             self.zanik.move()
-            self.collectibles.moveRing()
+            
+            # Update ring movement
+            self._update_rings()
             self._update_screen()
-
+            
+            self.settings.count += 1
+            
+            
+            
+            
+            
     # Function to track user input
     def __check_events(self):
         for event in pygame.event.get():
@@ -58,6 +74,7 @@ class ZanikGame:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+
     
     def _check_keydown_events(self, event):
         # Respond to keypresses
@@ -108,22 +125,40 @@ class ZanikGame:
         # Display score
         self.scoreText()
         
-        # Create collectibles
-        #self.collectibles.createRing()
+        # Creates rings from the ring list        
+        for i in range(len(self.rings.ringList)):
+            self.screen.blit(self.rings.ringList[i].image, [self.rings.ringList[i].rect.x, self.rings.ringList[i].rect.y])
 
+        
         # Update screen to display new background
         pygame.display.update()
-    
-    def _check_ring_count(self):
-        ringCount =[]
-        maxRings = 10
-        for i in range (maxRings):
-            ringCount.append(self.collectibles.createRing())
-                            
+                                
+    def _check_rings(self):
+        # Check if created list of rings is empty and populates it with rings
+        if len(self.ringCount) == 0:
+            self.ringCount = self.rings.createRings()
+       
+    # Create movement for rings      
+    def _update_rings(self):
+        for r in self.rings.ringList:
+                r.rect.x -= r.settings.ring_speed
+                # On char collision point is added to the scoreboard
+                if r.rect.x in range(self.zanik.rect.x, self.zanik.rect.x + 50):
+                    if r.rect.y in range(self.zanik.rect.y, self.zanik.rect.y +100):
+                        self.rings.ringList.pop()
+                        self.settings.score += 1
+                        
+                # When ring reaches left side it gets removed
+                elif r.rect.x == 0:
+                    self.rings.ringList.pop()
+                    self.settings.score -= 1
+                
+                                       
     def scoreText(self):
        text = self.myfont.render("Score: " +str(self.settings.score),1, (0, 0, 0))
        self.screen.blit(text,(5,10))
     
+
 if __name__ == '__main__':
     zg = ZanikGame()
     zg.run_game()

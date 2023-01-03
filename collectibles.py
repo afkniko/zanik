@@ -1,28 +1,29 @@
 import pygame
 import random
+from settings import Settings
 
-class Collectibles():
+class Rings():
     
-    def __init__(self,zg_game):
-        # Create  screen
-        self.screen = zg_game.screen
-        self.screen_rect = zg_game.screen.get_rect()
-        self.settings = zg_game.settings
-        
-        self.x = self.settings.width
-        self.y = random.randrange(500,600)
-        self.hitbox = (self.x + 10, self.y + 25)
-        
-        
-        # Load images of collectibles
-        self.rings_img = [pygame.image.load("assets/ring1.bmp"), 
-                        pygame.image.load("assets/ring2.bmp"), 
-                        pygame.image.load("assets/ring3.bmp")]
+    def __init__(self,image_path, x ,y):
+
+        self.image_path = image_path
+        self.image = pygame.image.load(self.image_path)
+        self.rect = self.image.get_rect()        
+        self.rect.y = y
+        self.rect.x = x
+        self.settings = Settings()
+
+        #self.hitbox = (self.rect.x, self.rect.y)
+        self.value = 1
         
         
-    def createRing(self):
-        ringChoice = random.choice([0,1,2])
-        self.screen.blit(self.rings_img[0],  [self.x, self.y])
         
-    def moveRing(self):
-        self.x -= self.settings.idle_speed
+    def createRings(self):
+        # Load images of collectibles    
+        self.ringList = []
+        if self.settings.count % 5 == 0 :
+            y_cor = random.randrange(500,650)
+            r = Rings(self.image_path, self.rect.x, y_cor)
+            self.ringList.append(r)
+            return self.ringList
+

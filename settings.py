@@ -17,3 +17,10 @@ class Settings:
         
         # Score
         self.score = 0
+        
+        # Ring settings
+        self.img_path = "assets/ring1.bmp"
+        self.ring_speed = 0.15
+       
+        # Set loop count
+        self.count = 0
