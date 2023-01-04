@@ -32,10 +32,8 @@ class ZanikGame:
         self.tiles = math.ceil((self.settings.width/self.bg_width)+2)
         # Initialize assets
         self.zanik = Zanik(self)
-        self.rings = Rings(self.settings.img_path, self.settings.width, self.settings.height)
+        self.rings = Rings()
         self.ringCount = self.rings.createRings()
-        
-        # Set count for spawns
         
 
 
@@ -47,10 +45,14 @@ class ZanikGame:
             
             # Keep track of user input
             self.__check_events()
+            
             # Make character response to keys
             self.zanik.move()
+            
             # Update ring movement
             self._update_rings()
+            
+            # Update display
             self._update_screen()
             
             self.settings.count += 1
@@ -61,8 +63,6 @@ class ZanikGame:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-                
-            # APPLY direction when key is pressed
             if event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -83,6 +83,7 @@ class ZanikGame:
         # Move character left
         if event.key == pygame.K_LEFT:
             self.zanik.moving_left = True
+            pygame.transform.flip(self.zanik.image, True, False)
         if event.key == pygame.K_q:
             sys.exit()
     
@@ -144,9 +145,6 @@ class ZanikGame:
                         self.rings.ringList.pop()
                         # Adds rings value to score when ring is collected  
                         self.settings.score += r.value
-                            
-                        
-                # When ring reaches left side it gets removed
                 
                 
                                        

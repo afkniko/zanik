@@ -12,13 +12,15 @@ class Zanik():
         # Load image of character
         self.image = pygame.image.load("assets/zanikSprite.bmp")
         self.rect = self.image.get_rect()
-        
+        # Flip image according to direction
+        self.right_image = pygame.image.load("assets/zanikSprite.bmp")
+        self.left_image = pygame.transform.flip(self.image, True, False)
         # Movement
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-        self.idle_left = True
+        #self.idle_left = True
 
         
         # Get image size
@@ -32,7 +34,6 @@ class Zanik():
         # Char positions
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
-        #self.hitbox = (self.rect.x , self.rect.x + 100, self.rect.y, self.rect.y + 100)
         
         
     def blitme(self):
@@ -48,13 +49,12 @@ class Zanik():
             self.y += self.settings.char_speed
         # Move the player right   
         if self.moving_right and self.rect.x < 1000:
+            self.image = self.right_image
             self.x += self.settings.char_speed
         # Move the player left   
-        if self.moving_left and self.rect.x > 0:
-            self.x -= self.settings.char_speed
-        
-        if self.idle_left and self.rect.x > 0:
-            self.x -= self.settings.idle_speed
-            
+        if self.moving_left and self.rect.x > 0: 
+            self.image = self.left_image
+            self.x -= self.settings.left_char_speed
+
         self.rect.x = self.x
         self.rect.y = self.y
