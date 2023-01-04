@@ -38,8 +38,7 @@ class Rings():
 class Corrupted(Rings):
     def __init__(self, image_path, x ,y, corrupted = True):
         Rings.__init__(self, image_path, x, y)
-        
-        
+        self.value = -1
         self.corrupted = corrupted
 
         

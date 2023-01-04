@@ -142,18 +142,8 @@ class ZanikGame:
                 elif r.rect.x in range(self.zanik.rect.x, self.zanik.rect.x + 50):
                     if r.rect.y in range(self.zanik.rect.y, self.zanik.rect.y +100):
                         self.rings.ringList.pop()
-                        
-                        # If 0 points and corrupted is collected, game ends
-                        if r.corrupted == True and self.settings.score == 0:
-                            sys.exit()
-                            
-                        # Sets score to 0 if corrupted ring is collected
-                        elif r.corrupted == True:
-                            self.settings.score = 0   
-                            
-                        # Adds +1 to score when ring is collected  
-                        else:
-                            self.settings.score += r.value
+                        # Adds rings value to score when ring is collected  
+                        self.settings.score += r.value
                             
                         
                 # When ring reaches left side it gets removed
