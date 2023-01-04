@@ -20,6 +20,7 @@ class Settings:
         
         # Ring settings
         self.img_path = "assets/ring1.bmp"
+        self.corrupted = "assets/corrupted_ring.bmp"
         self.ring_speed = 0.15
        
         # Set loop count

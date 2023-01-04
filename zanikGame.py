@@ -47,21 +47,14 @@ class ZanikGame:
             
             # Keep track of user input
             self.__check_events()
-            
-            # Check rings list if its empty and populate it
-            self._check_rings()
             # Make character response to keys
             self.zanik.move()
-            
             # Update ring movement
             self._update_rings()
             self._update_screen()
             
             self.settings.count += 1
-            
-            
-            
-            
+                   
             
     # Function to track user input
     def __check_events(self):
@@ -125,33 +118,46 @@ class ZanikGame:
         # Display score
         self.scoreText()
         
+        # Check if ringlist is empty
+        if len(self.ringCount) == 0:
+            self.ringCount = self.rings.createRings()
+            
         # Creates rings from the ring list        
         for i in range(len(self.rings.ringList)):
             self.screen.blit(self.rings.ringList[i].image, [self.rings.ringList[i].rect.x, self.rings.ringList[i].rect.y])
 
         
+        
         # Update screen to display new background
         pygame.display.update()
-                                
-    def _check_rings(self):
-        # Check if created list of rings is empty and populates it with rings
-        if len(self.ringCount) == 0:
-            self.ringCount = self.rings.createRings()
-       
+
     # Create movement for rings      
     def _update_rings(self):
         for r in self.rings.ringList:
                 r.rect.x -= r.settings.ring_speed
+                
+                if r.rect.x == 0:
+                    self.rings.ringList.pop()
                 # On char collision point is added to the scoreboard
-                if r.rect.x in range(self.zanik.rect.x, self.zanik.rect.x + 50):
+                elif r.rect.x in range(self.zanik.rect.x, self.zanik.rect.x + 50):
                     if r.rect.y in range(self.zanik.rect.y, self.zanik.rect.y +100):
                         self.rings.ringList.pop()
-                        self.settings.score += 1
+                        
+                        # If 0 points and corrupted is collected, game ends
+                        if r.corrupted == True and self.settings.score == 0:
+                            sys.exit()
+                            
+                        # Sets score to 0 if corrupted ring is collected
+                        elif r.corrupted == True:
+                            self.settings.score = 0   
+                            
+                        # Adds +1 to score when ring is collected  
+                        else:
+                            self.settings.score += r.value
+                            
                         
                 # When ring reaches left side it gets removed
-                elif r.rect.x == 0:
-                    self.rings.ringList.pop()
-                    self.settings.score -= 1
+                
                 
                                        
     def scoreText(self):

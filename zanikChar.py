@@ -32,7 +32,7 @@ class Zanik():
         # Char positions
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
-        self.hitbox = (self.x + 10, self.y + 20)
+        #self.hitbox = (self.rect.x , self.rect.x + 100, self.rect.y, self.rect.y + 100)
         
         
     def blitme(self):
