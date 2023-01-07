@@ -36,6 +36,6 @@ Press up or down to collect rings and avoid enemies
 ## Roadmap
 
 - [x] Add rings and scores
-- [ ] Add enemies and health/lifes
+- [ ] Add enemies and health
 - [ ] Extra maps
 - [ ] New characters
