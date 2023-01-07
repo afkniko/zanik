@@ -24,7 +24,6 @@ class Rings():
         self.ringList = []
         # Creates ring to list every 5 loops
         if self.settings.count % 5 == 0 :
-            #y_cor = random.randrange(500,650)
             ringChoice = random.randint(0,10)
             if ringChoice > 3:
                 r = Rings()

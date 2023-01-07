@@ -145,9 +145,7 @@ class ZanikGame:
                         self.rings.ringList.pop()
                         # Adds rings value to score when ring is collected  
                         self.settings.score += r.value
-                
-                
-                                       
+                                   
     def scoreText(self):
        text = self.myfont.render("Score: " +str(self.settings.score),1, (0, 0, 0))
        self.screen.blit(text,(5,10))
