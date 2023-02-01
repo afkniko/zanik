@@ -1,4 +1,4 @@
-# zanik_and_the_lost_rings
+# zanik
 
 My first take on learning Python through pygame.
 
